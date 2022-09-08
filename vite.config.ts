@@ -5,7 +5,6 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 
-// https://vitejs.cn/config/#scaffolding-your-first-vite-project
 export default defineConfig({
   plugins: [
     vue(),
