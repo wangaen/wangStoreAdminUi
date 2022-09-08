@@ -1,0 +1,40 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"useDefineForClassFields": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"strict": true,
+		"jsx": "preserve",
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"suppressImplicitAnyIndexErrors": true, //解决 某某类型 的表达式不能用于索引类型
+		"lib": [
+			"esnext",
+			"dom"
+		],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"src/*"
+			]
+		}
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.d.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue"
+	],
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
+		}
+	],
+	"exclude": [
+		"node_modules",
+		"dist"
+	]
+}
