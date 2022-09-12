@@ -4,10 +4,10 @@
   </el-config-provider>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { ElConfigProvider } from 'element-plus';
+import { defineComponent } from "vue";
+import { ElConfigProvider } from "element-plus";
 // element-plus 转为 中文
-import zhCn from 'element-plus/lib/locale/lang/zh-cn';
+import zhCn from "element-plus/lib/locale/lang/zh-cn";
 
 export default defineComponent({
   components: {

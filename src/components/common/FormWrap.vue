@@ -9,11 +9,7 @@
       :style="{ width: formWidth }"
       @submit.prevent="() => false"
     >
-      <div
-        v-for="(item, index) in labelList"
-        :key="index"
-        class="form-item-box"
-      >
+      <div v-for="(item, index) in labelList" :key="index" class="form-item-box">
         <!-- 输入框 或 文本框 -->
         <template v-if="item.type === 'input' || item.type === 'textarea'">
           <el-form-item :label="item.title" :prop="item.prop">
@@ -70,12 +66,9 @@
         <template v-else-if="item.type === 'radio'">
           <el-form-item :label="item.title" :prop="item.prop">
             <el-radio-group v-model="ruleForm[item.prop]">
-              <el-radio
-                v-for="(val, index) in item.data"
-                :key="index"
-                :label="val.value"
-                >{{ val.label }}</el-radio
-              >
+              <el-radio v-for="(val, index) in item.data" :key="index" :label="val.value">{{
+                val.label
+              }}</el-radio>
             </el-radio-group>
           </el-form-item>
         </template>
@@ -101,8 +94,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { formLabelListType } from './type';
+import { onMounted, ref } from "vue";
+import { formLabelListType } from "./type";
 
 interface formWrapPropsType {
   // 表单数据对象
@@ -122,9 +115,9 @@ const props = withDefaults(defineProps<formWrapPropsType>(), {
     return {};
   },
   // 表单宽度
-  formWidth: '500px',
+  formWidth: "500px",
   // label 宽度
-  labelWidth: '110px',
+  labelWidth: "110px",
   loading: false,
   // 每行列数, 默认为 1
   column: 1,
@@ -133,16 +126,14 @@ const props = withDefaults(defineProps<formWrapPropsType>(), {
 });
 
 onMounted(() => {
-  const ele = document.getElementsByClassName('ruleForm_box')[0] as HTMLElement;
+  const ele = document.getElementsByClassName("ruleForm_box")[0] as HTMLElement;
   const maxWidth = ele.offsetWidth - 10;
   if (props.column > 1) {
-    const w =
-      (maxWidth - (props.column - 1) * props.columnSpace) / props.column;
-    const ele: HTMLCollectionOf =
-      document.getElementsByClassName('form-item-box');
+    const w = (maxWidth - (props.column - 1) * props.columnSpace) / props.column;
+    const ele: HTMLCollectionOf = document.getElementsByClassName("form-item-box");
     for (let i = 0; i < ele.length; i += 1) {
-      (ele[i] as HTMLElement).style.width = w + 'px';
-      (ele[i] as HTMLElement).style.float = 'left';
+      (ele[i] as HTMLElement).style.width = w + "px";
+      (ele[i] as HTMLElement).style.float = "left";
       if ((i + 1) % props.column !== 0)
         (ele[i] as HTMLElement).style.margin = `0 ${props.columnSpace}px 0 0`;
     }

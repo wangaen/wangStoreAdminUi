@@ -14,24 +14,20 @@
           </router-view>
         </el-main>
       </el-container>
-      <div
-        v-show="!common.collapsed && isMask"
-        class="index-moask"
-        @click="maskChange"
-      ></div>
+      <div v-show="!common.collapsed && isMask" class="index-moask" @click="maskChange"></div>
     </el-container>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, nextTick } from 'vue';
-import Header from '@/layout/header/Header.vue';
-import Menu from '@/layout/aside/Menu.vue';
-import { isMoblie } from '@/utils/index';
-import common from '@/store/modules/common';
+import { onMounted, onUnmounted, ref, nextTick } from "vue";
+import Header from "@/layout/header/Header.vue";
+import Menu from "@/layout/aside/Menu.vue";
+import { isMoblie } from "@/utils/index";
+import common from "@/store/modules/common";
 
 const isMask = ref(false);
-const animationName = ref('');
+const animationName = ref("");
 const appWidth = ref(window.innerWidth);
 
 const resizeEventFun = ({ target }: any) => {
@@ -60,16 +56,16 @@ onMounted(() => {
     isMask.value = true;
   } else {
     resizeEventFun({ target: { innerWidth: appWidth.value } });
-    window.addEventListener('resize', resizeEventFun);
+    window.addEventListener("resize", resizeEventFun);
   }
 });
 
 nextTick(() => {
-  animationName.value = 'slide-fade';
+  animationName.value = "slide-fade";
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', resizeEventFun);
+  window.removeEventListener("resize", resizeEventFun);
 });
 
 const maskChange = () => {

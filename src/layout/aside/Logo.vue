@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import common from '@/store/modules/common';
+import common from "@/store/modules/common";
 </script>
 <style lang="scss" scoped>
 .Logo {

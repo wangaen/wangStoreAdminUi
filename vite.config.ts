@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import { resolve } from 'path';
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { resolve } from "path";
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 export default defineConfig({
   plugins: [
@@ -17,21 +17,21 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
+      "@": resolve(__dirname, "src"),
     },
   },
   root: process.cwd(), // 默认： process.cwd()。	项目根目录（index.html 文件所在的位置）
-  base: '/',
+  base: "./",
   server: {
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     port: 8686,
     open: true, // 启动服务时直接打开浏览器
     cors: true, // 允许跨域
     proxy: {
-      '^/api': {
-        target: 'http://192.168.1.188:3080',
+      "^/api": {
+        target: "http://127.0.0.1:8080",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

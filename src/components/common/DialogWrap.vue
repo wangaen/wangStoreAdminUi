@@ -1,11 +1,6 @@
 <template>
   <div class="DialogWrap">
-    <el-dialog
-      v-model="visible"
-      :width="width"
-      :before-close="handleClose"
-      :top="marginTop"
-    >
+    <el-dialog v-model="visible" :width="width" :before-close="handleClose" :top="marginTop">
       <!-- 标题插糟 -->
       <template #title>
         <div class="title">{{ title }}</div>
@@ -23,26 +18,26 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref } from '@vue/runtime-core';
+import { PropType, ref } from "@vue/runtime-core";
 
 defineProps({
   width: {
     type: String as PropType<string>,
-    default: '50%',
+    default: "50%",
   },
   title: {
     type: String as PropType<string>,
-    default: '',
+    default: "",
   },
   marginTop: {
     type: String as PropType<string>,
-    default: '',
+    default: "",
   },
 });
 
 const visible = ref(true);
-const emit = defineEmits(['handleClose']);
-const handleClose = () => emit('handleClose');
+const emit = defineEmits(["handleClose"]);
+const handleClose = () => emit("handleClose");
 </script>
 
 <style scoped lang="scss">

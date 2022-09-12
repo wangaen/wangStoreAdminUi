@@ -30,15 +30,15 @@ defineProps({
 });
 
 const pageSizes = [10, 20, 30, 40, 50, 100];
-const emit = defineEmits(['update:pageSize', 'update:pageIndex', 'refresh']);
+const emit = defineEmits(["update:pageSize", "update:pageIndex", "refresh"]);
 
 const handleSizeChange = (val: number) => {
-  emit('update:pageSize', val);
-  emit('refresh');
+  emit("update:pageSize", val);
+  emit("refresh");
 };
 const handleCurrentChange = (val: number) => {
-  emit('update:pageIndex', val);
-  emit('refresh');
+  emit("update:pageIndex", val);
+  emit("refresh");
 };
 </script>
 <style lang="scss" scoped>

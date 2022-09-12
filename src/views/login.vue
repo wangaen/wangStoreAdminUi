@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { ElMessage, ElLoading } from 'element-plus/es';
-import { reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import type { FormInstance, FormRules } from 'element-plus';
-import { adminLoginApi, LoginFormType } from '@/api/login';
-import { ApiReturnBody } from '@/utils/axios/type';
-import { setToken } from '@/utils/token';
+import { ElMessage, ElLoading } from "element-plus/es";
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import type { FormInstance, FormRules } from "element-plus";
+import { adminLoginApi, LoginFormType } from "@/api/login";
+import { ApiReturnBody } from "@/utils/axios/type";
+import { setToken } from "@/utils/token";
 
 interface TOKEN {
   token: string;
 }
 
 const loginForm = reactive<LoginFormType>({
-  userName: '',
-  password: '',
+  username: "",
+  password: "",
   type: 1,
 });
 
@@ -29,17 +29,17 @@ const toLogin = async () => {
   await ruleFormRef.value?.validate(async (valid) => {
     if (valid) {
       const res: ApiReturnBody<TOKEN> = await adminLoginApi(loginForm);
-      if (res.code === 200) {
-        ElMessage.success('登录成功');
+      if (res.status === "ok") {
+        ElMessage.success("登录成功");
         setToken(res.data.token);
         const loadingFull = ElLoading.service({
           lock: true,
-          text: '正在进行初始化...',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)',
+          text: "正在进行初始化...",
+          spinner: "el-icon-loading",
+          background: "rgba(0, 0, 0, 0.7)",
         });
         setTimeout(() => {
-          router.push('/home');
+          router.push("/home");
           loadingFull.close();
           ElMessage.closeAll();
         }, 500);
@@ -51,8 +51,8 @@ const toLogin = async () => {
 };
 
 const rules = reactive<FormRules>({
-  userName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
 });
 </script>
 
@@ -62,12 +62,8 @@ const rules = reactive<FormRules>({
     <div class="login_pane">
       <img src="@/assets/images/logo.png" alt="" class="logo-img" />
       <div class="login-tab">
-        <span :class="{ 'active-tab': activeTab === 1 }" @click="tabChange(1)"
-          >管理员登录</span
-        >
-        <span :class="{ 'active-tab': activeTab === 2 }" @click="tabChange(2)"
-          >商家登录</span
-        >
+        <span :class="{ 'active-tab': activeTab === 1 }" @click="tabChange(1)">管理员登录</span>
+        <span :class="{ 'active-tab': activeTab === 2 }" @click="tabChange(2)">商家登录</span>
       </div>
       <div class="login-form">
         <p class="title">欢迎登录</p>
@@ -78,12 +74,9 @@ const rules = reactive<FormRules>({
           label-width="0px"
           :size="'large'"
         >
-          <el-form-item label="" prop="userName">
+          <el-form-item label="" prop="username">
             <el-icon :color="'#0099ff'" :size="22"><Avatar /></el-icon>
-            <el-input
-              v-model="loginForm.userName"
-              placeholder="请输入用户名"
-            ></el-input>
+            <el-input v-model="loginForm.username" placeholder="请输入用户名" />
           </el-form-item>
           <el-form-item label="" prop="password">
             <el-icon :color="'#0099ff'" :size="22"><Lock /></el-icon>
@@ -94,9 +87,7 @@ const rules = reactive<FormRules>({
               show-password
             ></el-input>
           </el-form-item>
-          <el-button type="primary" @click="toLogin" round class="login_button"
-            >登录</el-button
-          >
+          <el-button type="primary" @click="toLogin" round class="login_button">登录</el-button>
         </el-form>
       </div>
       <div class="login-form-bgc"></div>

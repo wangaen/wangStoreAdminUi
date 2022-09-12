@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, Ref, ref, watch } from 'vue';
-import { RouteRecordName, useRoute } from 'vue-router';
+import { onMounted, Ref, ref, watch } from "vue";
+import { RouteRecordName, useRoute } from "vue-router";
 
-const name: Ref<RouteRecordName | null | undefined> = ref('');
+const name: Ref<RouteRecordName | null | undefined> = ref("");
 const breadList = ref<any>([]);
 
 const route = useRoute();
@@ -22,7 +22,7 @@ const getBreadcrumb = () => {
   breadList.value = [];
   name.value = route.name;
   route.matched.forEach((item: any) => {
-    if (item.path !== '/') {
+    if (item.path !== "/") {
       breadList.value.push(item);
     }
   });

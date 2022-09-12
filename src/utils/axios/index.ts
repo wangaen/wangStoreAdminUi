@@ -1,13 +1,13 @@
-import type { AxiosInstance, AxiosRequestConfig } from 'axios';
-import axios from 'axios';
-import { getToken } from '../token';
-import { ApiAxiosResponse } from './type';
+import type { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios from "axios";
+import { getToken } from "../token";
+import { ApiAxiosResponse } from "./type";
 
 const configData: AxiosRequestConfig = {
-  baseURL: '/api',
+  baseURL: "/api",
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     // 携带 token
     Authorization: `Bearer ${getToken()}`,
   },

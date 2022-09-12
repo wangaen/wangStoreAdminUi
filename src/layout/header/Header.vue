@@ -32,12 +32,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router';
-import { computed } from 'vue';
-import { ElMessage } from 'element-plus/es';
-import Breadcrumb from './Breadcrumb.vue';
-import common from '@/store/modules/common';
-import { removeToken } from '@/utils/token/index';
+import { useRouter } from "vue-router";
+import { computed } from "vue";
+import { ElMessage } from "element-plus/es";
+import Breadcrumb from "./Breadcrumb.vue";
+import common from "@/store/modules/common";
+import { removeToken } from "@/utils/token/index";
 // import Icon from '@/components/common/Icon.vue';
 
 const props = defineProps({
@@ -49,9 +49,9 @@ const props = defineProps({
 
 const menuOptions = [
   {
-    label: '退出登录',
-    routeName: 'Logout',
-    icon: 'poweroff',
+    label: "退出登录",
+    routeName: "Logout",
+    icon: "poweroff",
   },
 ];
 const collapsed = computed({
@@ -64,10 +64,10 @@ const collapsed = computed({
 });
 const router = useRouter();
 const clickMenuItem = (item: { routeName: string }) => {
-  if (item.routeName === 'Logout') {
+  if (item.routeName === "Logout") {
     removeToken();
-    ElMessage.success('已成功退出');
-    router.push({ name: 'Login' });
+    ElMessage.success("已成功退出");
+    router.push({ name: "Login" });
   }
 };
 

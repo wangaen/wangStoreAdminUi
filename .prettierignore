@@ -6,6 +6,7 @@
 **/*.sh
 
 /public/*
+/src/assets/icon/*
 
 package-lock.json
 package.json
