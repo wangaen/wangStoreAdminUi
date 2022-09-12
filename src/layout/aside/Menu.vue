@@ -17,11 +17,7 @@
             <span>{{ item?.meta?.breadcrumbName }}</span>
           </template>
           <template v-for="(value, j) in item.children" :key="j">
-            <el-menu-item
-              :index="value.name"
-              class="menu-item-box"
-              v-if="value?.meta?.isMenu"
-            >
+            <el-menu-item :index="value.name" class="menu-item-box" v-if="value?.meta?.isMenu">
               <span>{{ value?.meta?.breadcrumbName }}</span>
             </el-menu-item>
           </template>
@@ -37,12 +33,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity';
-import { useRoute, useRouter } from 'vue-router';
-import common from '@/store/modules/common';
-import router from '@/router';
-import Icon from '@/components/common/Icon.vue';
-import Logo from './Logo.vue';
+import { computed } from "@vue/reactivity";
+import { useRoute, useRouter } from "vue-router";
+import common from "@/store/modules/common";
+import router from "@/router";
+import Icon from "@/components/common/Icon.vue";
+import Logo from "./Logo.vue";
 
 const route = useRoute();
 const defaultActive = computed(() => {

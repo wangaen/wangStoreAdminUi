@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from "axios";
 
 export interface ApiReturnBody<T = any> {
-  code?: string | number;
+  status?: string | number;
   data: T;
   msg?: string;
 }

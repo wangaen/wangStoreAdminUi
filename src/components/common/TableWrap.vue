@@ -53,10 +53,7 @@
             <div style="white-space: pre">{{ item.customRender(scope) }}</div>
           </div>
         </template>
-        <template
-          #default="scope"
-          v-else-if="item.type !== 'selection' && item.type !== 'index'"
-        >
+        <template #default="scope" v-else-if="item.type !== 'selection' && item.type !== 'index'">
           <span style="white-space: nowrap">{{ scope.row[item.key] }}</span>
         </template>
       </el-table-column>
@@ -65,8 +62,8 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref } from 'vue';
-import { tableLabelListType } from './type';
+import { PropType, ref } from "vue";
+import { tableLabelListType } from "./type";
 
 const props = defineProps({
   tableData: {
@@ -89,7 +86,7 @@ const props = defineProps({
   // 如果是单选的，表头行的单选框更替的文字内容，默认：选择
   headerRowCheckBoxText: {
     type: String,
-    default: '选择',
+    default: "选择",
   },
   // 是否开启点击表格行从而选中该行的单选框， 默认 关闭
   isOpenClickSelectRow: {
@@ -100,13 +97,13 @@ const props = defineProps({
 
 const selectValue = ref([]);
 const multipleTable = ref();
-const emit = defineEmits(['handleSelectionChange', 'switchChange']);
+const emit = defineEmits(["handleSelectionChange", "switchChange"]);
 
 // checkbox 发生变化
 const handleSelectionChange = (val: any) => {
   selectValue.value = val;
   if (!props.isSingleSelect) {
-    emit('handleSelectionChange', val);
+    emit("handleSelectionChange", val);
   }
 };
 // 当用户手动勾选数据行的 Checkbox 时触发的事件
@@ -114,7 +111,7 @@ const select = (selection: any, row: any) => {
   if (props.isSingleSelect) {
     multipleTable.value.clearSelection();
     multipleTable.value.toggleRowSelection(row, selection.length !== 0);
-    emit('handleSelectionChange', selection.length === 0 ? [] : row);
+    emit("handleSelectionChange", selection.length === 0 ? [] : row);
   }
 };
 // 当某一行被点击时会触发该事件
@@ -122,10 +119,8 @@ const rowClick = (row: any) => {
   const selectData = selectValue.value;
   if (props.isSingleSelect) {
     emit(
-      'handleSelectionChange',
-      selectData.some((item) => JSON.stringify(item) === JSON.stringify(row))
-        ? []
-        : row,
+      "handleSelectionChange",
+      selectData.some((item) => JSON.stringify(item) === JSON.stringify(row)) ? [] : row,
     );
     multipleTable.value.clearSelection();
   }
@@ -135,15 +130,13 @@ const rowClick = (row: any) => {
     } else {
       multipleTable.value.toggleRowSelection(
         row,
-        !selectData.some(
-          (item) => JSON.stringify(item) === JSON.stringify(row),
-        ),
+        !selectData.some((item) => JSON.stringify(item) === JSON.stringify(row)),
       );
     }
   }
 };
 const switchChange = (row: any) => {
-  emit('switchChange', row);
+  emit("switchChange", row);
 };
 </script>
 <style lang="scss" scoped>

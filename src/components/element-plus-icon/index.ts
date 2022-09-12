@@ -1,5 +1,5 @@
 // element组件 按需导入
-import { App } from 'vue';
+import { App } from "vue";
 
 // 需要的用到的图标，就必须要引入
 import {
@@ -17,7 +17,7 @@ import {
   Plus,
   Avatar,
   Lock,
-} from '@element-plus/icons-vue';
+} from "@element-plus/icons-vue";
 
 const components = [
   Edit,

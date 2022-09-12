@@ -34,10 +34,7 @@
         </el-form-item>
         <!-- 下拉选择框 -->
         <el-form-item v-else-if="item.type === 'select'" :label="item.title">
-          <el-select
-            v-model="ruleForm[item.prop]"
-            :placeholder="item.placeholder"
-          >
+          <el-select v-model="ruleForm[item.prop]" :placeholder="item.placeholder">
             <el-option
               v-for="val in item.data"
               :key="val.value"
@@ -48,46 +45,41 @@
         </el-form-item>
         <!-- 输入框 -->
         <el-form-item v-else-if="item.type === 'input'" :label="item.title">
-          <el-input
-            v-model="ruleForm[item.prop]"
-            :placeholder="item.placeholder"
-          />
+          <el-input v-model="ruleForm[item.prop]" :placeholder="item.placeholder" />
         </el-form-item>
       </template>
       <div class="btn_box">
         <el-button type="primary" @click="handleSearch()">查询</el-button>
-        <el-button plain style="margin-left: 10px" @click="resetSearchForm()"
-          >重置</el-button
-        >
+        <el-button plain style="margin-left: 10px" @click="resetSearchForm()">重置</el-button>
       </div>
     </el-form>
   </div>
 </template>
 <script lang="ts" setup>
-import { computed, ref } from '@vue/reactivity';
-import { searchLabelListType, searchFormType } from './type';
+import { computed, ref } from "@vue/reactivity";
+import { searchLabelListType, searchFormType } from "./type";
 
 interface SearchPropsType {
   searchLabel: searchLabelListType[];
   form: searchFormType;
 }
 const props = defineProps<SearchPropsType>();
-const emit = defineEmits(['handleSearch', 'resetForm', 'update:form']);
+const emit = defineEmits(["handleSearch", "resetForm", "update:form"]);
 const ruleForm: any = computed({
   get: () => props.form,
-  set: (val) => emit('update:form', val),
+  set: (val) => emit("update:form", val),
 });
 // 查询
 const handleSearch = () => {
-  emit('handleSearch');
+  emit("handleSearch");
 };
 // 重置
 const resetSearchForm = () => {
   props.searchLabel.forEach((item: searchLabelListType) => {
-    ruleForm.value[item.prop] = '';
+    ruleForm.value[item.prop] = "";
   });
   if (ruleForm.value?.pageIndex) ruleForm.value.pageIndex = 1;
-  emit('handleSearch');
+  emit("handleSearch");
 };
 // 暴露 ref
 const searchFormRef = ref();

@@ -1,14 +1,14 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from "vue-router";
 
 const homeRouter: RouteRecordRaw = {
-  path: '/home',
-  name: 'Home',
-  component: () => import('@/views/home/Home.vue'),
+  path: "/home",
+  name: "Home",
+  component: () => import("@/views/home/Home.vue"),
   meta: {
     isMenu: true,
     isMulti: false,
-    breadcrumbName: '首页',
-    icon: 'icon-home',
+    breadcrumbName: "首页",
+    icon: "icon-home",
   },
 };
 

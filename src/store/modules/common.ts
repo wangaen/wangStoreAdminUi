@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 const commonStore = defineStore({
-  id: 'common',
+  id: "common",
   state: () => {
     return {
       // 是否水平折叠收起菜单

@@ -1,16 +1,16 @@
 <script setup lang="ts">
 const avatarList = [
-  'icon-001-man',
-  'icon-003-man',
-  'icon-005-man',
-  'icon-010-woman',
-  'icon-011-woman',
-  'icon-015-woman',
+  "icon-001-man",
+  "icon-003-man",
+  "icon-005-man",
+  "icon-010-woman",
+  "icon-011-woman",
+  "icon-015-woman",
 ];
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 defineProps({ modelValue: { type: String } });
 const select = (item: string) => {
-  emit('update:modelValue', item);
+  emit("update:modelValue", item);
 };
 </script>
 <template>
