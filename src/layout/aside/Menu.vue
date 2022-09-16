@@ -13,7 +13,13 @@
         <!-- 有子菜单 -->
         <el-sub-menu :index="item.name" v-if="item?.meta?.isMulti">
           <template #title>
-            <Icon :name="item.meta.icon" class="menu-icon" />
+            <Icon
+              :name="(item?.meta?.icon as string)"
+              width="20px"
+              height="20px"
+              color="#fff"
+              class="menu-icon"
+            />
             <span>{{ item?.meta?.breadcrumbName }}</span>
           </template>
           <template v-for="(value, j) in item.children" :key="j">
@@ -24,7 +30,13 @@
         </el-sub-menu>
         <!-- 单独菜单 -->
         <el-menu-item :index="item.name" v-else>
-          <Icon :name="item?.meta?.icon" class="menu-icon" />
+          <Icon
+            :name="(item?.meta?.icon as string)"
+            width="20px"
+            height="20px"
+            color="#fff"
+            class="menu-icon"
+          />
           <template #title>{{ item?.meta?.breadcrumbName }}</template>
         </el-menu-item>
       </template>
@@ -87,9 +99,5 @@ const select = (name: string) => {
       margin-right: 10px !important;
     }
   }
-}
-.menu-icon {
-  width: 20px;
-  height: 20px;
 }
 </style>

@@ -1,20 +1,19 @@
 <script lang="ts" setup>
 import { ElMessage, ElLoading } from "element-plus/es";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus";
-import { adminLoginApi, LoginFormType } from "@/api/login";
+import { adminLoginApi, getCaptchaCode, LoginFormType, verifyCaptchaCode } from "@/api/login";
 import { ApiReturnBody } from "@/utils/axios/type";
 import { setToken } from "@/utils/token";
-
-interface TOKEN {
-  token: string;
-}
+import Icon from "@/components/common/Icon.vue";
 
 const loginForm = reactive<LoginFormType>({
   username: "",
   password: "",
   type: 1,
+  id: "",
+  verifyCode: "",
 });
 
 const activeTab = ref(1);
@@ -23,15 +22,37 @@ const tabChange = (num: 1 | 2) => {
   loginForm.type = num;
 };
 
+const verifyCodeImg = ref("");
+const getVerifyCode = async () => {
+  const res: ApiReturnBody = await getCaptchaCode();
+  if (res.status === "ok") {
+    loginForm.id = res.data.id;
+    verifyCodeImg.value = res.data.verifyCode;
+  }
+};
+const verifyCaptcha = async (): Promise<boolean> => {
+  const res: ApiReturnBody = await verifyCaptchaCode(loginForm);
+  if (res.status === "ok") {
+    return true;
+  }
+  return false;
+};
+onMounted(() => getVerifyCode());
+
 const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
 const toLogin = async () => {
   await ruleFormRef.value?.validate(async (valid) => {
     if (valid) {
-      const res: ApiReturnBody<TOKEN> = await adminLoginApi(loginForm);
-      if (res.status === "ok") {
+      const res1 = await verifyCaptcha();
+      if (!res1) {
+        ElMessage.warning("验证码错误");
+        return;
+      }
+      const res2: ApiReturnBody<{ token: string }> = await adminLoginApi(loginForm);
+      if (res2.status === "ok") {
         ElMessage.success("登录成功");
-        setToken(res.data.token);
+        setToken(res2.data.token);
         const loadingFull = ElLoading.service({
           lock: true,
           text: "正在进行初始化...",
@@ -42,9 +63,9 @@ const toLogin = async () => {
           router.push("/home");
           loadingFull.close();
           ElMessage.closeAll();
-        }, 500);
+        }, 400);
       } else {
-        ElMessage.warning(res.msg);
+        ElMessage.warning(res2.msg);
       }
     }
   });
@@ -53,6 +74,7 @@ const toLogin = async () => {
 const rules = reactive<FormRules>({
   username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
   password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+  verifyCode: [{ required: true, message: "请输入验证码", trigger: "blur" }],
 });
 </script>
 
@@ -80,12 +102,23 @@ const rules = reactive<FormRules>({
           </el-form-item>
           <el-form-item label="" prop="password">
             <el-icon :color="'#0099ff'" :size="22"><Lock /></el-icon>
+            <el-input v-model="loginForm.password" placeholder="请输入密码" show-password />
+          </el-form-item>
+          <el-form-item label="" prop="verifyCode">
+            <Icon :name="'icon-yanzhengma'" width="22px" height="22px" :color="'#0099ff'"></Icon>
             <el-input
-              v-model="loginForm.password"
-              placeholder="请输入密码"
+              v-model="loginForm.verifyCode"
+              placeholder="请输入验证码"
               @keypress.enter="toLogin"
-              show-password
-            ></el-input>
+              class="verify-code"
+            />
+            <img
+              :src="verifyCodeImg"
+              alt=""
+              class="verify-img"
+              @click="getVerifyCode"
+              title="验证码"
+            />
           </el-form-item>
           <el-button type="primary" @click="toLogin" round class="login_button">登录</el-button>
         </el-form>
@@ -104,6 +137,7 @@ const rules = reactive<FormRules>({
   top: 100px;
   z-index: -1;
 }
+// 0-1200px 样式
 @media screen and (max-width: 1200px) {
   .title {
     display: none;
@@ -115,6 +149,7 @@ const rules = reactive<FormRules>({
     display: none;
   }
 }
+// 1200px - 100vw 样式
 @media screen and (min-width: 1200px) {
   .title {
     display: block;
@@ -160,7 +195,7 @@ const rules = reactive<FormRules>({
     border-radius: 10px;
     top: 25%;
     position: absolute;
-    height: 255px;
+    height: 310px;
     width: 400px;
     z-index: -1;
     background-color: #fff;
@@ -208,7 +243,8 @@ const rules = reactive<FormRules>({
 :deep(.el-form-item__content) {
   display: flex;
   flex-wrap: nowrap;
-  .el-icon {
+  .el-icon,
+  .icon {
     margin-right: 10px;
   }
 }
@@ -220,5 +256,13 @@ const rules = reactive<FormRules>({
   font-weight: 1000;
   color: #888;
   letter-spacing: 10px;
+}
+.verify-code {
+  width: calc(100% - 32px - 90px);
+}
+.verify-img {
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
 }
 </style>

@@ -22,11 +22,11 @@
       >
         <template v-slot="{ row }">
           <el-switch
-            v-model="row[item.key]"
+            v-model="row[item.key!]"
             disabled
             validate-event
-            :active-value="item.data.activeValue"
-            :inactive-value="item.data.inactiveValue"
+            :active-value="item.data && item.data.activeValue"
+            :inactive-value="item.data && item.data.inactiveValue"
             @click="switchChange(row)"
           />
         </template>
@@ -50,7 +50,9 @@
               class="status-logo"
               :style="{ 'background-color': item.statusColor(scope.row) }"
             ></div>
-            <div style="white-space: pre">{{ item.customRender(scope) }}</div>
+            <div style="white-space: pre">
+              {{ item.customRender && item.customRender(scope) }}
+            </div>
           </div>
         </template>
         <template #default="scope" v-else-if="item.type !== 'selection' && item.type !== 'index'">

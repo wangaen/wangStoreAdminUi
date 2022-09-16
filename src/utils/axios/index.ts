@@ -1,7 +1,7 @@
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import axios from "axios";
 import { getToken } from "../token";
-import { ApiAxiosResponse } from "./type";
+import { ApiAxiosResponse, ApiReturnBody } from "./type";
 
 const configData: AxiosRequestConfig = {
   baseURL: "/api",
@@ -25,9 +25,9 @@ class Request {
     );
     // 响应拦截
     this.instance.interceptors.response.use(
-      (res: ApiAxiosResponse): any => res.data,
+      (res: ApiAxiosResponse): ApiReturnBody => res.data,
       (err: any) => {
-        console.log(err);
+        console.log("错误", err);
         return Promise.reject(err);
       },
     );

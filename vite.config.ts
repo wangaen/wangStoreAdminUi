@@ -21,7 +21,7 @@ export default defineConfig({
     },
   },
   root: process.cwd(), // 默认： process.cwd()。	项目根目录（index.html 文件所在的位置）
-  base: "./",
+  base: "/",
   server: {
     host: "0.0.0.0",
     port: 8686,

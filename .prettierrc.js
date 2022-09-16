@@ -20,7 +20,7 @@ module.exports = {
 
   bracketSpacing: true, //在对象的花括号后（{）和前（}）输出空格: { foo: bar }
 
-  jsxBracketSameLine: false, //多属性html标签的‘>’折行放置
+  jsxBracketSameLine: true, //多属性html标签的‘>’折行放置
 
   arrowParens: "always", //为单行箭头函数的参数添加圆括号
   // " avoid " - 尽可能不添加圆括号，示例：x => x

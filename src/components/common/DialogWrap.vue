@@ -1,6 +1,12 @@
 <template>
   <div class="DialogWrap">
-    <el-dialog v-model="visible" :width="width" :before-close="handleClose" :top="marginTop">
+    <el-dialog
+      v-model="visible"
+      :width="width"
+      :before-close="handleClose"
+      :top="marginTop"
+      append-to-body
+    >
       <!-- 标题插糟 -->
       <template #title>
         <div class="title">{{ title }}</div>

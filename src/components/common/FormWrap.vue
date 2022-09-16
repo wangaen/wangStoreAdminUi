@@ -14,7 +14,7 @@
         <template v-if="item.type === 'input' || item.type === 'textarea'">
           <el-form-item :label="item.title" :prop="item.prop">
             <el-input
-              v-model="ruleForm[item.prop]"
+              v-model="form[item.prop]"
               :type="item.inputType || item.type || ''"
               :maxlength="item.maxlength"
               :show-word-limit="!!item.maxlength"
@@ -28,7 +28,7 @@
         <template v-else-if="item.type === 'select'">
           <el-form-item :label="item.title" :prop="item.prop">
             <el-select
-              v-model="ruleForm[item.prop]"
+              v-model="form[item.prop]"
               :disabled="item.disabled"
               :placeholder="item.placeholder"
               style="width: 100%"
@@ -46,7 +46,7 @@
         <template v-else-if="item.type === 'date'">
           <el-form-item :label="item.title" :prop="item.prop">
             <el-date-picker
-              v-model="ruleForm[item.prop]"
+              v-model="form[item.prop]"
               type="date"
               :placeholder="item.placeholder || '选择日期'"
             />
@@ -56,7 +56,7 @@
         <template v-else-if="item.type === 'switch'">
           <el-form-item :label="item.title" :prop="item.prop">
             <el-switch
-              v-model="ruleForm[item.prop]"
+              v-model="form[item.prop]"
               :active-value="item.data.activeValue"
               :inactive-value="item.data.inactiveValue"
             />
@@ -65,7 +65,7 @@
         <!-- 单选框 -->
         <template v-else-if="item.type === 'radio'">
           <el-form-item :label="item.title" :prop="item.prop">
-            <el-radio-group v-model="ruleForm[item.prop]">
+            <el-radio-group v-model="form[item.prop]">
               <el-radio v-for="(val, index) in item.data" :key="index" :label="val.value">{{
                 val.label
               }}</el-radio>
@@ -75,7 +75,7 @@
         <!-- 多选框 -->
         <template v-else-if="item.type === 'checkbox'">
           <el-form-item :label="item.title" :prop="item.prop">
-            <el-checkbox-group v-model="ruleForm[item.prop]" size="small">
+            <el-checkbox-group v-model="form[item.prop]" size="small">
               <el-checkbox
                 v-for="(val, index) in item.data"
                 :key="index"
@@ -94,6 +94,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from "@vue/reactivity";
 import { onMounted, ref } from "vue";
 import { formLabelListType } from "./type";
 
@@ -125,17 +126,23 @@ const props = withDefaults(defineProps<formWrapPropsType>(), {
   columnSpace: 0,
 });
 
+const emit = defineEmits(["update:ruleForm"]);
+const form = computed({
+  get: () => props.ruleForm,
+  set: (val) => emit("update:ruleForm", val),
+});
+
 onMounted(() => {
   const ele = document.getElementsByClassName("ruleForm_box")[0] as HTMLElement;
   const maxWidth = ele.offsetWidth - 10;
   if (props.column > 1) {
-    const w = (maxWidth - (props.column - 1) * props.columnSpace) / props.column;
-    const ele: HTMLCollectionOf = document.getElementsByClassName("form-item-box");
-    for (let i = 0; i < ele.length; i += 1) {
-      (ele[i] as HTMLElement).style.width = w + "px";
-      (ele[i] as HTMLElement).style.float = "left";
+    const w: number = (maxWidth - (props.column - 1) * props.columnSpace) / props.column;
+    const formItemBox = document.getElementsByClassName("form-item-box");
+    for (let i = 0; i < formItemBox.length; i += 1) {
+      (formItemBox[i] as HTMLElement).style.width = `${w}px`;
+      (formItemBox[i] as HTMLElement).style.float = "left";
       if ((i + 1) % props.column !== 0)
-        (ele[i] as HTMLElement).style.margin = `0 ${props.columnSpace}px 0 0`;
+        (formItemBox[i] as HTMLElement).style.margin = `0 ${props.columnSpace}px 0 0`;
     }
   }
 });

@@ -43,13 +43,17 @@ export interface searchFormType {
   pageSize?: number;
 }
 
+type SwitchDataType = {
+  activeValue: boolean;
+  inactiveValue: boolean;
+};
 export interface tableLabelListType {
   type?: string;
   title?: string;
   key?: string;
   slot?: string;
   width?: number | string;
-  data?: any[];
+  data?: SwitchDataType;
   statusColor?: (row: any) => string;
   customRender?: (row: any) => string;
 }

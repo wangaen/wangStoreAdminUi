@@ -1,11 +1,11 @@
 import { AxiosResponse } from "axios";
 
 export interface ApiReturnBody<T = any> {
-  status?: string | number;
   data: T;
+  status?: string | number;
   msg?: string;
 }
 
-export interface ApiAxiosResponse extends AxiosResponse {
+export interface ApiAxiosResponse extends AxiosResponse<ApiReturnBody> {
   data: ApiReturnBody;
 }
