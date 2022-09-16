@@ -17,5 +17,6 @@ import "element-plus/theme-chalk/el-message-box.css";
 // 引入 iconfont
 // import "@/assets/icon/iconfont.css";
 // import "@/assets/icon/iconfont.js";
+
 const app = createApp(App);
 app.use(router).use(store).use(elementPlusIcon).mount("#app");

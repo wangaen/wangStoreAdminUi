@@ -131,7 +131,6 @@ const form = computed({
   get: () => props.ruleForm,
   set: (val) => emit("update:ruleForm", val),
 });
-
 onMounted(() => {
   const ele = document.getElementsByClassName("ruleForm_box")[0] as HTMLElement;
   const maxWidth = ele.offsetWidth - 10;
