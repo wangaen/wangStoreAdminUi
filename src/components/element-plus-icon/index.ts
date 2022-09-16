@@ -17,6 +17,7 @@ import {
   Plus,
   Avatar,
   Lock,
+  Picture,
 } from "@element-plus/icons-vue";
 
 const components = [
@@ -34,6 +35,7 @@ const components = [
   Plus,
   Avatar,
   Lock,
+  Picture,
 ];
 
 // 按需导出图标组件
