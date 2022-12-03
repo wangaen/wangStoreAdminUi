@@ -10,9 +10,12 @@
       <Breadcrumb class="breadcrumb-name" />
     </div>
     <div class="right_part">
+      <span class="quanping" @click="fullChange"
+        ><el-icon :size="16"><FullScreen v-if="isFull" /><BottomLeft v-else /></el-icon
+        >{{ isFull ? "全屏" : "还原" }}</span
+      >
       <el-dropdown>
         <span class="el-dropdown-link user-info-area">
-          <!-- <Icon name="icon-001-man" class="icon-box"></Icon> -->
           <span class="user-name">system</span>
           <el-icon class="icon-down"><arrow-down-bold /></el-icon>
         </span>
@@ -33,12 +36,12 @@
 
 <script lang="ts" setup>
 import { useRouter } from "vue-router";
-import { computed } from "vue";
+import { computed, ref, onBeforeUnmount, onMounted } from "vue";
+import screenfull from "screenfull";
 import { ElMessage } from "element-plus/es";
 import Breadcrumb from "./Breadcrumb.vue";
 import common from "@/store/modules/common";
 import { removeToken } from "@/utils/token/index";
-// import Icon from '@/components/common/Icon.vue';
 
 const props = defineProps({
   appWidth: {
@@ -62,6 +65,7 @@ const collapsed = computed({
     common.toggleCollapsed(val);
   },
 });
+
 const router = useRouter();
 const clickMenuItem = (item: { routeName: string }) => {
   if (item.routeName === "Logout") {
@@ -77,6 +81,34 @@ const toggleCollapsed = () => {
     common.changeIsAside(!collapsed.value);
   }
 };
+
+//  全屏状态
+const isFull = ref(true);
+
+// 点击icon切换全屏事件
+const fullChange = () => {
+  // 判断当前浏览器是否支持全屏
+  if (screenfull.isEnabled) {
+    isFull.value = !isFull.value;
+    screenfull.toggle();
+  } else {
+    ElMessage.warning("当前浏览器不支持全屏");
+  }
+};
+
+const resizeChange = () => {
+  isFull.value = !screenfull.isFullscreen;
+};
+
+onMounted(() => {
+  // 监听窗口大小变化（全屏改变）事件
+  window.addEventListener("resize", resizeChange);
+});
+
+onBeforeUnmount(() => {
+  //  注销
+  window.removeEventListener("resize", resizeChange);
+});
 </script>
 <style lang="scss" scoped>
 .Header {
@@ -95,21 +127,40 @@ const toggleCollapsed = () => {
       margin-right: 10px;
     }
   }
+  .right_part {
+    align-items: center;
+    display: flex;
+  }
   .user-name {
     vertical-align: 5px;
     margin-right: 5px;
   }
   .user-info-area {
     cursor: pointer;
+    .icon-box {
+      width: 20px;
+      height: 20px;
+      background-color: #eee;
+      border-radius: 10px;
+    }
+    .icon-down {
+      vertical-align: 2px;
+    }
   }
-  .icon-box {
-    width: 20px;
-    height: 20px;
-    background-color: #eee;
-    border-radius: 10px;
-  }
-  .icon-down {
-    vertical-align: 2px;
+  .quanping {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    cursor: pointer;
+    padding-bottom: 5px;
+    &:hover {
+      color: #4090c0;
+    }
+    .el-icon {
+      margin-right: 5px;
+      vertical-align: middle;
+    }
   }
 }
 </style>
